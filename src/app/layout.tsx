@@ -20,7 +20,7 @@ export default function RootLayout({
       <body
         className={cn(
           pretendard.variable,
-          'font-pretendard bg-background text-foreground antialiased'
+          'bg-background font-pretendard text-foreground antialiased typo-body-16'
         )}
       >
         {children}
