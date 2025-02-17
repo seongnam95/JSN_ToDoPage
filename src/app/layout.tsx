@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { cn } from '@/lib/cn';
 import { pretendard } from '@/assets/fonts';
 
-import './globals.css';
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,7 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={cn(pretendard.variable, 'font-pretendard antialiased')}>
+      <body
+        className={cn(
+          pretendard.variable,
+          'font-pretendard bg-background text-foreground antialiased'
+        )}
+      >
         {children}
       </body>
     </html>

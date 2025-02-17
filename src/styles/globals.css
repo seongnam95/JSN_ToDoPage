@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --surface: #f7f7f7;
+  --surface-accent: #ededed;
+
+  --foreground: #121212;
+  --foreground-muted: #767676;
+
+  --primary: #3e66f3;
+  --primary-surface: #f5f7fe;
+  --primary-foreground: #ffffff;
+
+  --border: #f5f5f5;
+  --border-accent: #e0e0e0;
+}
+
+html {
+  font-size: 62.5%;
+}
