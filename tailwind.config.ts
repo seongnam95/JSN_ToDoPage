@@ -29,6 +29,10 @@ export default {
       md: '768px',
       lg: '1200px',
     },
+    boxShadow: {
+      sm: '0 4px 16px 0 rgba(170, 170, 170, 0.2)',
+      md: '0 6px 32px 0 rgba(170, 170, 170, 0.2)',
+    },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
