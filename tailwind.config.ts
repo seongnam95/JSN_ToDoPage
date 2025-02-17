@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import { fontFamily } from 'tailwindcss/defaultTheme';
+import tailwindAnimate from 'tailwindcss-animate';
 import { typoPlugin } from './src/styles/theme/typoPlugin';
 
 export default {
@@ -60,5 +61,5 @@ export default {
       pretendard: ['var(--pretendard)', ...fontFamily.sans],
     },
   },
-  plugins: [typoPlugin],
+  plugins: [typoPlugin, tailwindAnimate],
 } satisfies Config;
