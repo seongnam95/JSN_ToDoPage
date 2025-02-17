@@ -16,6 +16,11 @@
 
   --border: #f5f5f5;
   --border-accent: #e0e0e0;
+
+  --danger: #f30505;
+  --danger-surface: #fde8e8;
+
+  --yellow: #ffcc41;
 }
 
 html {
