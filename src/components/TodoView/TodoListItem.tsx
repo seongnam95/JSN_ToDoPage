@@ -14,6 +14,7 @@ interface TodoListItemProps extends Todo {
   onChangeStarred?: (todoId: string, starred: boolean) => void;
   onChangeText?: (todoId: string, text: string) => void;
   onMenuChangeText?: (todoId: string) => void;
+  onMenuChangeBoard?: (todoId: string, moveToBoardId: string) => void;
   onMenuDelete?: (todoId: string) => void;
 }
 
@@ -29,6 +30,7 @@ export function TodoListItem({
   onChangeStarred,
   onChangeText,
   onMenuChangeText,
+  onMenuChangeBoard,
   onMenuDelete,
 }: TodoListItemProps) {
   return (
@@ -75,6 +77,7 @@ export function TodoListItem({
           {/* 메뉴 버튼 */}
           <TodoMenu
             onChangeText={() => onMenuChangeText?.(id)}
+            onChangeBoard={(boardId) => onMenuChangeBoard?.(id, boardId)}
             onDelete={() => onMenuDelete?.(id)}
             disabled={disabled}
           />
