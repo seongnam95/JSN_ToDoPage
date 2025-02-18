@@ -16,8 +16,14 @@ export const typoPlugin = plugin.withOptions(() => {
         letterSpacing: '-0.015rem',
         fontWeight: '600',
       },
-      '.typo-title-24': {
-        fontSize: '24px',
+      '.typo-title-20': {
+        fontSize: '20px',
+        lineHeight: '1.4',
+        letterSpacing: '-0.015rem',
+        fontWeight: '600',
+      },
+      '.typo-title-32': {
+        fontSize: '32px',
         lineHeight: '1.4',
         letterSpacing: '-0.015rem',
         fontWeight: '600',
