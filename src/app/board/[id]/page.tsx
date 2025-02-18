@@ -12,7 +12,7 @@ export default function BoardPage({ params: { id } }: BoardPageProps) {
     <div className='mx-auto flex h-screen max-w-[90rem] flex-col'>
       <BoardHeader boardId={id} back />
 
-      <div className='flex-1 overflow-hidden px-5'>
+      <div className='flex-1 overflow-hidden'>
         <TodoView boardId={id} />
       </div>
     </div>
