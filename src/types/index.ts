@@ -1,6 +1,8 @@
 export interface Board {
   id: string;
   name: string;
+  type: 'fixed' | 'user';
+  todoOrder?: string[];
   color?: string;
 }
 
