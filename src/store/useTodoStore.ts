@@ -54,10 +54,3 @@ export const useTodoStore = create<TodoStore>()(
     { name: TODO_STORAGE_KEY }
   )
 );
-
-export const useCurrentBoardTodos = (boardId: string) => {
-  const todos = useTodoStore((state) => state.todos);
-  if (boardId === 'all') return todos;
-  if (boardId === 'starred') return todos.filter((todo) => todo.starred);
-  return todos.filter((todo) => todo.boardId === boardId);
-};
