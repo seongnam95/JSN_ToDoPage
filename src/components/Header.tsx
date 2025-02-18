@@ -1,12 +1,12 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
-import { useBoardStore } from '@/store/useBoardStore';
 import { BoardDrawer } from '@/components/BoardDrawer';
 import { PanelRight } from 'lucide-react';
+import { useTodo } from '@/hooks/useTodo';
 
 export function Header() {
-  const currentBoard = useBoardStore((state) => state.selectedBoard);
+  const { currentBoard } = useTodo();
 
   return (
     <>

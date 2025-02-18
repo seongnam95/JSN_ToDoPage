@@ -2,7 +2,7 @@ import { Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
-import { useBoardStore } from '@/store/useBoardStore';
+import { useTodo } from '@/hooks/useTodo';
 
 interface TodoInputProps {
   className?: string;
@@ -10,7 +10,7 @@ interface TodoInputProps {
 }
 
 export function TodoInput({ className, onEnter }: TodoInputProps) {
-  const currentBoard = useBoardStore((state) => state.selectedBoard);
+  const { currentBoard } = useTodo();
   const [starred, setStarred] = useState(currentBoard.id === 'starred');
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
