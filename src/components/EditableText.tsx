@@ -20,7 +20,7 @@ export function EditableText({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!e.currentTarget.value.trim() || e.nativeEvent.isComposing) return;
 
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.code === 'Enter') {
       onEnter?.(e.currentTarget.value);
     }
   };
