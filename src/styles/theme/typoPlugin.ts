@@ -4,6 +4,12 @@ export const typoPlugin = plugin.withOptions(() => {
   return function ({ addUtilities }) {
     addUtilities({
       // Title
+      '.typo-title-14': {
+        fontSize: '14px',
+        lineHeight: '1.4',
+        letterSpacing: '-0.015rem',
+        fontWeight: '600',
+      },
       '.typo-title-16': {
         fontSize: '16px',
         lineHeight: '1.4',
