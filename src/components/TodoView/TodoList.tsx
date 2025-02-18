@@ -7,6 +7,7 @@ import {
 } from '@dnd-kit/sortable';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { useBoardStore } from '@/store/useBoardStore';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { TodoListItem } from './TodoListItem';
 
 interface TodoListProps {
@@ -77,7 +78,11 @@ export function TodoList({
   };
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext
+      collisionDetection={closestCenter}
+      modifiers={[restrictToVerticalAxis]}
+      onDragEnd={handleDragEnd}
+    >
       <SortableContext
         items={todos.map((t) => t.id)}
         strategy={verticalListSortingStrategy}
