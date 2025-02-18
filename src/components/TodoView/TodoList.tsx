@@ -1,21 +1,18 @@
-import { cn } from '@/lib/cn';
-import { ScrollArea } from '@/components/ui/ScrollArea';
-import { useCurrentBoardTodos, useTodoStore } from '@/store/useTodoStore';
+import { useTodoStore } from '@/store/useTodoStore';
 import { useState } from 'react';
+import { Todo } from '@/types';
 import { TodoListItem } from './TodoListItem';
 
 interface TodoListProps {
-  scrollRef?: React.Ref<HTMLDivElement>;
+  todos: Todo[];
   className?: string;
-  boardId: string;
 }
 
-export function TodoList({ className, scrollRef, boardId }: TodoListProps) {
+export function TodoList({ className, todos }: TodoListProps) {
   const [editTodoId, setEditTodoId] = useState<string | null>(null);
   const isEditMode = editTodoId !== null;
 
   const { updateTodo, deleteTodo } = useTodoStore();
-  const todos = useCurrentBoardTodos(boardId);
 
   /** 할 일 텍스트 변경 */
   const handleChangeTodoText = (todoId: string, text: string) => {
@@ -38,24 +35,28 @@ export function TodoList({ className, scrollRef, boardId }: TodoListProps) {
     deleteTodo(todoId);
   };
 
+  /** 할 일 보드 변경 */
+  const handleChangeTodoBoard = (todoId: string, moveToBoardId: string) => {
+    updateTodo(todoId, { boardId: moveToBoardId });
+  };
+
   return (
-    <ScrollArea ref={scrollRef} className={cn('h-full', className)}>
-      <ul className='mt-2 pb-10'>
-        {todos.map((todo) => (
-          <TodoListItem
-            key={todo.id}
-            disabled={isEditMode}
-            editing={editTodoId === todo.id}
-            onBlur={() => setEditTodoId(null)}
-            onChangeText={handleChangeTodoText}
-            onChangeStarred={handleChangeTodoStarred}
-            onChangeChecked={handleChangeTodoChecked}
-            onMenuChangeText={setEditTodoId}
-            onMenuDelete={handleDeleteTodo}
-            {...todo}
-          />
-        ))}
-      </ul>
-    </ScrollArea>
+    <ul className={className}>
+      {todos.map((todo) => (
+        <TodoListItem
+          key={todo.id}
+          disabled={isEditMode}
+          editing={editTodoId === todo.id}
+          onBlur={() => setEditTodoId(null)}
+          onChangeText={handleChangeTodoText}
+          onChangeStarred={handleChangeTodoStarred}
+          onChangeChecked={handleChangeTodoChecked}
+          onMenuChangeText={setEditTodoId}
+          onMenuChangeBoard={handleChangeTodoBoard}
+          onMenuDelete={handleDeleteTodo}
+          {...todo}
+        />
+      ))}
+    </ul>
   );
 }
