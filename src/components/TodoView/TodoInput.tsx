@@ -1,8 +1,7 @@
 import { Star } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
-import { useTodo } from '@/hooks/useTodo';
 
 interface TodoInputProps {
   className?: string;
@@ -10,22 +9,18 @@ interface TodoInputProps {
 }
 
 export function TodoInput({ className, onEnter }: TodoInputProps) {
-  const { currentBoard } = useTodo();
-  const [starred, setStarred] = useState(currentBoard.id === 'starred');
+  const [starred, setStarred] = useState(false);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!e.currentTarget.value.trim() || e.nativeEvent.isComposing) return;
 
     if (e.key === 'Enter') {
       onEnter?.(e.currentTarget.value, starred);
+
       e.currentTarget.value = '';
       setStarred(false);
     }
   };
-
-  useEffect(() => {
-    setStarred(currentBoard.id === 'starred');
-  }, [currentBoard.id]);
 
   return (
     <div
@@ -44,7 +39,6 @@ export function TodoInput({ className, onEnter }: TodoInputProps) {
         variant='ghost'
         size='icon'
         onClick={() => setStarred((prev) => !prev)}
-        disabled={currentBoard.id === 'starred'}
       >
         <Star
           className={cn(
