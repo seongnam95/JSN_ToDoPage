@@ -3,7 +3,7 @@
 import { useTodo } from '@/hooks/useTodo';
 import { Header, HeaderProps } from '@/components/Header';
 import { JSX } from 'react';
-import { Package, Star } from 'lucide-react';
+import { List, Star, SquareKanban } from 'lucide-react';
 
 interface BoardHeaderProps extends HeaderProps {
   boardId: string;
@@ -13,7 +13,8 @@ export function BoardHeader({ boardId, ...props }: BoardHeaderProps) {
   const { currentBoard } = useTodo({ boardId });
 
   const fixedBoardIconMap: Record<string, JSX.Element> = {
-    all: <Package />,
+    all: <SquareKanban />,
+    list: <List />,
     starred: <Star />,
   };
 
@@ -28,9 +29,9 @@ export function BoardHeader({ boardId, ...props }: BoardHeaderProps) {
         />
       )}
 
-      <div className='[&>svg]:size-4'>{renderIcon}</div>
+      <div className='[&>svg]:size-5'>{renderIcon}</div>
 
-      <h2 className='typo-title-16'>{currentBoard.name}</h2>
+      <h2 className='typo-title-20'>{currentBoard.name}</h2>
     </div>
   );
 

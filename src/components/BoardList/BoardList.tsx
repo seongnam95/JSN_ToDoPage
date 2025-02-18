@@ -1,10 +1,11 @@
 'use client';
 
-import { ArrowUpDown, Package, PlusIcon, Star } from 'lucide-react';
+import { ArrowUpDown, List, PlusIcon, SquareKanban, Star } from 'lucide-react';
 import { JSX, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { useBoardStore } from '@/store/useBoardStore';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -42,7 +43,8 @@ export function BoardList({ className }: BoardListProps) {
   });
 
   const fixedBoardIconMap: Record<string, JSX.Element> = {
-    all: <Package />,
+    all: <SquareKanban />,
+    list: <List />,
     starred: <Star />,
   };
 
@@ -65,7 +67,8 @@ export function BoardList({ className }: BoardListProps) {
 
   /** 보드 클릭 */
   const handleBoardClick = (boardId: string) => {
-    router.push(`/board/${boardId}`);
+    const route = boardId === 'all' ? '/board' : `/board/${boardId}`;
+    router.push(route);
   };
 
   /** 보드 드레그 앤 드랍 순서 변경 */
@@ -115,7 +118,11 @@ export function BoardList({ className }: BoardListProps) {
         </Button>
       </div>
 
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext
+        collisionDetection={closestCenter}
+        modifiers={[restrictToVerticalAxis]}
+        onDragEnd={handleDragEnd}
+      >
         <SortableContext
           items={userBoards.map((b) => b.id)}
           strategy={verticalListSortingStrategy}
