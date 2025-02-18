@@ -12,8 +12,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import { useBoardStore } from '@/store/useBoardStore';
+import { cn } from '@/lib/cn';
 
 interface TodoMenuProps {
+  className?: string;
   disabled?: boolean;
   onChangeText?: () => void;
   onChangeBoard?: (moveToBoardId: string) => void;
@@ -21,6 +23,7 @@ interface TodoMenuProps {
 }
 
 export function TodoMenu({
+  className,
   disabled,
   onChangeText,
   onChangeBoard,
@@ -35,7 +38,7 @@ export function TodoMenu({
         <Button
           variant='ghost'
           size='icon'
-          className='hover:bg-transparent'
+          className={cn('hover:bg-transparent', className)}
           disabled={disabled}
         >
           <MoreVertical className='size-4 text-foreground-muted' />
@@ -43,34 +46,40 @@ export function TodoMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56'>
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={onChangeText}>
-            텍스트 변경
-          </DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>이동</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                {userBoards.map((board) => (
-                  <DropdownMenuItem
-                    key={board.id}
-                    onClick={() => onChangeBoard?.(board.id)}
-                  >
-                    <div
-                      className='size-1.5 rounded-full'
-                      style={{ backgroundColor: board.color }}
-                    />
-                    {board.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-          <DropdownMenuItem
-            onClick={onDelete}
-            className='text-danger focus:bg-danger-surface'
-          >
-            삭제
-          </DropdownMenuItem>
+          {onChangeText && (
+            <DropdownMenuItem onClick={onChangeText}>
+              텍스트 변경
+            </DropdownMenuItem>
+          )}
+          {onChangeBoard && (
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>이동</DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  {userBoards.map((board) => (
+                    <DropdownMenuItem
+                      key={board.id}
+                      onClick={() => onChangeBoard?.(board.id)}
+                    >
+                      <div
+                        className='size-1.5 rounded-full'
+                        style={{ backgroundColor: board.color }}
+                      />
+                      {board.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+          )}
+          {onDelete && (
+            <DropdownMenuItem
+              onClick={onDelete}
+              className='text-danger focus:bg-danger-surface'
+            >
+              삭제
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
