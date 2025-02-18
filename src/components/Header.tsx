@@ -23,7 +23,7 @@ export function Header({ back, title, className, actions }: HeaderProps) {
           className
         )}
       >
-        <div className='flex h-full w-full max-w-[90rem] items-center gap-3 pl-4 pr-4 max-sm:pr-3'>
+        <div className='relative flex h-full w-full max-w-[90rem] items-center gap-3 pl-4 pr-4 max-sm:pr-3'>
           {/* 뒤로가기 버튼 */}
           {back && (
             <Button
@@ -37,7 +37,9 @@ export function Header({ back, title, className, actions }: HeaderProps) {
           )}
 
           {/* 타이틀 */}
-          <div className='typo-title-20 flex flex-1 items-center'>{title}</div>
+          <div className='absolute left-1/2 top-1/2 flex flex-1 -translate-x-1/2 -translate-y-1/2 items-center typo-title-20'>
+            {title}
+          </div>
 
           {/* 액션 버튼 */}
           {actions}
