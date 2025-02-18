@@ -19,8 +19,6 @@ import {
 } from '@dnd-kit/sortable';
 import { useState } from 'react';
 import { useTodoOrder } from '@/store/useTodoOrder';
-import { cn } from '@/lib/cn';
-import { ScrollArea } from '@/components/ui/ScrollArea';
 
 interface TodoGroup {
   [key: string]: Todo[];

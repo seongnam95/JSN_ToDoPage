@@ -1,9 +1,8 @@
 import { TodoCard } from '@/components/KanbanView/TodoCard';
-import { Button } from '@/components/ui/Button';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { useTodoOrder } from '@/store/useTodoOrder';
 import { useTodoStore } from '@/store/useTodoStore';
-import { Status, STATUS, Todo } from '@/types';
+import { Status, Todo } from '@/types';
 import { useDroppable } from '@dnd-kit/core';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
