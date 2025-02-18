@@ -41,7 +41,7 @@ export function TodoView({ boardId, className }: TodoViewProps) {
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (['all', 'starred'].includes(boardId))
+  if (['list', 'starred'].includes(boardId))
     return <AllTodoList boardId={boardId} />;
 
   return (
