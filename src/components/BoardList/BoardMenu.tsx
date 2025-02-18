@@ -26,6 +26,16 @@ export function BoardMenu({
   onChangeBoardColor,
   onDeleteBoard,
 }: BoardMenuProps) {
+  const handleRename = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    onRename?.();
+  };
+
+  const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    onDeleteBoard?.();
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,7 +45,7 @@ export function BoardMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56'>
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={onRename}>이름 변경</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleRename}>이름 변경</DropdownMenuItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>색상 변경</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
@@ -45,7 +55,7 @@ export function BoardMenu({
             </DropdownMenuPortal>
           </DropdownMenuSub>
           <DropdownMenuItem
-            onClick={onDeleteBoard}
+            onClick={handleDelete}
             className='text-danger focus:bg-danger-surface'
           >
             삭제

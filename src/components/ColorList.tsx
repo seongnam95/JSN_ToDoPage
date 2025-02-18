@@ -22,7 +22,10 @@ export function ColorList({ onSelectedColor }: ColorListProps) {
           type='button'
           className='size-6 rounded-sm transition-all duration-200 hover:scale-110'
           style={{ backgroundColor: color }}
-          onClick={() => onSelectedColor?.(color)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectedColor?.(color);
+          }}
           aria-label={`색상 선택: ${color}`}
         />
       ))}
