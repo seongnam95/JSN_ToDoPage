@@ -8,9 +8,18 @@ interface AllTodoListProps {
 }
 
 export function AllTodoList({ boardId }: AllTodoListProps) {
-  const { boardGroups, isEmptyTodo } = useTodo({ boardId });
+  const { boardGroups } = useTodo({ boardId });
 
-  const groups = boardGroups.filter((group) => group.todos.length > 0);
+  const groups = boardGroups.filter((group) => {
+    const isStarred = boardId === 'starred';
+    const todos = isStarred
+      ? group.todos.filter((todo) => todo.starred)
+      : group.todos;
+
+    return todos.length > 0;
+  });
+
+  const isEmptyTodo = groups.every((group) => group.todos.length === 0);
 
   if (isEmptyTodo) return <EmptyTodo />;
 

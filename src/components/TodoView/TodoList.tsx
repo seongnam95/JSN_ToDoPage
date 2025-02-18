@@ -28,7 +28,7 @@ export function TodoList({
   const [editTodoId, setEditTodoId] = useState<string | null>(null);
   const isEditMode = editTodoId !== null;
 
-  const { updateTodo, deleteTodo } = useTodoStore();
+  const { updateTodo, deleteTodo, updateTodoStatus } = useTodoStore();
   const { updateBoard } = useBoardStore();
 
   const orderMap = new Map(order?.map((id, index) => [id, index]));
@@ -45,7 +45,7 @@ export function TodoList({
 
   /** 할 일 완료 여부 변경 */
   const handleChangeTodoChecked = (todoId: string, completed: boolean) => {
-    updateTodo(todoId, { completed });
+    updateTodoStatus(todoId, completed ? 'done' : 'todo');
   };
 
   /** 할 일 즐겨찾기 여부 변경 */

@@ -9,7 +9,6 @@ export interface Board {
 export interface Todo {
   id: string;
   text: string;
-  completed: boolean;
   starred: boolean;
   boardId?: string;
   status: Status;

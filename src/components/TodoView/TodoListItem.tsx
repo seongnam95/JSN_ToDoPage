@@ -34,9 +34,11 @@ export function TodoListItem({
   onMenuChangeBoard,
   onMenuDelete,
 }: TodoListItemProps) {
-  const { id, text, completed, starred } = todo;
+  const { id, text, status, starred } = todo;
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
+
+  const completed = status === 'done';
 
   const style = {
     transform: transform

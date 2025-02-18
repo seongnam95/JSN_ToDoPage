@@ -8,7 +8,6 @@ const TODO_STORAGE_KEY = 'TODO_STORAGE_KEY';
 interface TodoInput {
   text: string;
   starred: boolean;
-  completed?: boolean;
   boardId?: string;
 }
 
@@ -31,7 +30,6 @@ export const useTodoStore = create<TodoStore>()(
           id: nanoid(),
           text: data.text,
           starred: data.starred,
-          completed: data.completed || false,
           boardId: data.boardId || 'default',
           status: status || 'todo',
         };
