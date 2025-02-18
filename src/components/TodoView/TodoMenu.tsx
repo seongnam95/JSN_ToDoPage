@@ -27,6 +27,7 @@ export function TodoMenu({
   onDelete,
 }: TodoMenuProps) {
   const boards = useBoardStore((state) => state.boards);
+  const userBoards = boards.filter((board) => board.type === 'user');
 
   return (
     <DropdownMenu>
@@ -49,7 +50,7 @@ export function TodoMenu({
             <DropdownMenuSubTrigger>이동</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                {boards.map((board) => (
+                {userBoards.map((board) => (
                   <DropdownMenuItem
                     key={board.id}
                     onClick={() => onChangeBoard?.(board.id)}

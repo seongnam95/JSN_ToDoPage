@@ -21,7 +21,11 @@ export function AllTodoList() {
                 />
                 <h2 className='typo-title-16'>{board.name}</h2>
               </div>
-              <TodoList className='mt-1.5 px-5 pb-10' todos={board.todos} />
+              <TodoList
+                className='mt-1.5 px-5 pb-10'
+                order={board.todoOrder}
+                todos={board.todos}
+              />
             </div>
           ))}
         </ScrollArea>

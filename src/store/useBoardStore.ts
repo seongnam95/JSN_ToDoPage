@@ -4,29 +4,36 @@ import { nanoid } from 'nanoid';
 import { Board } from '@/types';
 
 const BOARD_STORAGE_KEY = 'BOARD_STORAGE_KEY';
+const DEFAULT_BOARDS: Board[] = [
+  { id: 'all', name: '전체', type: 'fixed' },
+  { id: 'starred', name: '중요한 일', type: 'fixed' },
+  { id: 'default', name: '기타', color: '#C5C5C5', type: 'user' },
+];
 
 type BoardInput = Partial<Omit<Board, 'id'>>;
-
 interface BoardStore {
   boards: Board[];
-  selectedBoard: Board;
+  selectedBoardId: string;
 
   createBoard: (data?: BoardInput) => Board;
   updateBoard: (id: string, data: BoardInput) => void;
   deleteBoard: (id: string) => void;
-  selectBoard: (board: Board) => void;
+  selectBoard: (boardId: string) => void;
 }
 
 export const useBoardStore = create<BoardStore>()(
   persist(
     (set) => ({
-      boards: [{ id: 'default', name: '기타', color: '#C5C5C5' }],
-      selectedBoard: { id: 'all', name: '전체' },
+      boards: DEFAULT_BOARDS,
+      selectedBoardId: DEFAULT_BOARDS[0].id,
+
       createBoard: (data) => {
         const newBoard: Board = {
           id: nanoid(),
           name: data?.name || '새 보드',
           color: data?.color || '#000000',
+          todoOrder: [],
+          type: 'user',
         };
 
         set((state) => ({ boards: [newBoard, ...state.boards] }));
@@ -46,7 +53,7 @@ export const useBoardStore = create<BoardStore>()(
           boards: state.boards.filter((board) => board.id !== id),
         })),
 
-      selectBoard: (board) => set(() => ({ selectedBoard: board })),
+      selectBoard: (boardId) => set(() => ({ selectedBoardId: boardId })),
     }),
     { name: BOARD_STORAGE_KEY }
   )

@@ -6,7 +6,8 @@ import { Checkbox } from '@/components/ui/CheckBox';
 import { Todo } from '@/types';
 import { TodoMenu } from './TodoMenu';
 
-interface TodoListItemProps extends Todo {
+interface TodoListItemProps {
+  todo: Todo;
   disabled?: boolean;
   editing?: boolean;
   onBlur?: () => void;
@@ -19,11 +20,8 @@ interface TodoListItemProps extends Todo {
 }
 
 export function TodoListItem({
+  todo,
   disabled,
-  id,
-  text,
-  completed,
-  starred,
   editing,
   onBlur,
   onChangeChecked,
@@ -33,6 +31,8 @@ export function TodoListItem({
   onMenuChangeBoard,
   onMenuDelete,
 }: TodoListItemProps) {
+  const { id, text, completed, starred } = todo;
+
   return (
     <li
       className={cn(

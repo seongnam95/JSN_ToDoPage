@@ -5,14 +5,21 @@ import { TodoListItem } from './TodoListItem';
 
 interface TodoListProps {
   todos: Todo[];
+  order?: string[];
   className?: string;
 }
 
-export function TodoList({ className, todos }: TodoListProps) {
+export function TodoList({ className, todos, order }: TodoListProps) {
   const [editTodoId, setEditTodoId] = useState<string | null>(null);
   const isEditMode = editTodoId !== null;
 
   const { updateTodo, deleteTodo } = useTodoStore();
+
+  const orderMap = new Map(order?.map((id, index) => [id, index]));
+  const sortedTodos = todos.sort(
+    (a, b) =>
+      (orderMap.get(a.id) ?? Infinity) - (orderMap.get(b.id) ?? Infinity)
+  );
 
   /** 할 일 텍스트 변경 */
   const handleChangeTodoText = (todoId: string, text: string) => {
@@ -42,21 +49,24 @@ export function TodoList({ className, todos }: TodoListProps) {
 
   return (
     <ul className={className}>
-      {todos.map((todo) => (
-        <TodoListItem
-          key={todo.id}
-          disabled={isEditMode}
-          editing={editTodoId === todo.id}
-          onBlur={() => setEditTodoId(null)}
-          onChangeText={handleChangeTodoText}
-          onChangeStarred={handleChangeTodoStarred}
-          onChangeChecked={handleChangeTodoChecked}
-          onMenuChangeText={setEditTodoId}
-          onMenuChangeBoard={handleChangeTodoBoard}
-          onMenuDelete={handleDeleteTodo}
-          {...todo}
-        />
-      ))}
+      {sortedTodos.map((todo) => {
+        if (!todo) return null;
+        return (
+          <TodoListItem
+            key={todo.id}
+            disabled={isEditMode}
+            editing={editTodoId === todo.id}
+            onBlur={() => setEditTodoId(null)}
+            onChangeText={handleChangeTodoText}
+            onChangeStarred={handleChangeTodoStarred}
+            onChangeChecked={handleChangeTodoChecked}
+            onMenuChangeText={setEditTodoId}
+            onMenuChangeBoard={handleChangeTodoBoard}
+            onMenuDelete={handleDeleteTodo}
+            todo={todo}
+          />
+        );
+      })}
     </ul>
   );
 }

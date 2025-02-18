@@ -4,7 +4,8 @@ import { Board } from '@/types';
 import { EditableText } from '@/components/EditableText';
 import { BoardMenu } from './BoardMenu';
 
-interface BoardItemProps extends Board {
+interface BoardItemProps {
+  board: Board;
   icon?: React.ReactNode;
   menuEnabled?: boolean;
   active?: boolean;
@@ -19,9 +20,7 @@ interface BoardItemProps extends Board {
 }
 
 export function BoardListItem({
-  id,
-  name,
-  color,
+  board,
   icon,
   menuEnabled = false,
   active,
@@ -34,6 +33,8 @@ export function BoardListItem({
   onMenuChangeBoardColor,
   onMenuDeleteBoard,
 }: BoardItemProps) {
+  const { id, name, color } = board;
+
   return (
     <li>
       <div

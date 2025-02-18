@@ -1,15 +1,10 @@
 'use client';
 
 import { Package, PlusIcon, Star } from 'lucide-react';
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { useBoardStore } from '@/store/useBoardStore';
 import { BoardListItem } from './BoardListItem';
-
-const defaultBoards = [
-  { id: 'all', name: '전체', icon: <Package /> },
-  { id: 'starred', name: '중요한 일', icon: <Star /> },
-];
 
 interface BoardListProps {
   className?: string;
@@ -21,12 +16,20 @@ export function BoardList({ className }: BoardListProps) {
 
   const {
     boards,
-    selectedBoard,
+    selectedBoardId,
     createBoard,
     updateBoard,
     deleteBoard,
     selectBoard,
   } = useBoardStore();
+
+  const fixedBoards = boards.filter((board) => board.type === 'fixed');
+  const userBoards = boards.filter((board) => board.type === 'user');
+
+  const fixedBoardIconMap: Record<string, JSX.Element> = {
+    all: <Package />,
+    starred: <Star />,
+  };
 
   /** 새 보드 추가 */
   const handleClickAddBoard = () => {
@@ -49,13 +52,14 @@ export function BoardList({ className }: BoardListProps) {
     <div className={className}>
       {/* 기본 보드 리스트 */}
       <ul>
-        {defaultBoards.map((board) => (
+        {fixedBoards.map((board) => (
           <BoardListItem
             key={board.id}
-            onClick={() => selectBoard({ id: board.id, name: board.name })}
+            icon={fixedBoardIconMap[board.id]}
+            board={board}
+            onClick={() => selectBoard(board.id)}
             disabled={isEditMode}
-            active={selectedBoard.id === board.id}
-            {...board}
+            active={selectedBoardId === board.id}
           />
         ))}
       </ul>
@@ -63,7 +67,7 @@ export function BoardList({ className }: BoardListProps) {
       {/* 사용자 보드 리스트 */}
       <p className='mt-8 pl-2 text-foreground-muted typo-body-14'>보드</p>
       <ul className='mt-1'>
-        {boards.map((board) => {
+        {userBoards.map((board) => {
           const isDefaultBoard = board.id === 'default';
 
           return (
@@ -72,14 +76,14 @@ export function BoardList({ className }: BoardListProps) {
               menuEnabled={!isDefaultBoard}
               disabled={isEditMode}
               editing={editBoardId === board.id}
-              active={selectedBoard.id === board.id}
-              onClick={() => selectBoard(board)}
+              active={selectedBoardId === board.id}
+              onClick={() => selectBoard(board.id)}
               onBlur={() => setEditBoardId(null)}
               onChangeBoardName={handleChangeBoardName}
               onMenuRename={setEditBoardId}
               onMenuChangeBoardColor={handleChangeBoardColor}
               onMenuDeleteBoard={deleteBoard}
-              {...board}
+              board={board}
             />
           );
         })}
