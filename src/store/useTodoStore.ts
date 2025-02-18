@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { nanoid } from 'nanoid';
-import { Todo } from '@/types';
+import { Status, Todo } from '@/types';
 
 const TODO_STORAGE_KEY = 'TODO_STORAGE_KEY';
 
@@ -15,8 +15,9 @@ interface TodoInput {
 interface TodoStore {
   todos: Todo[];
 
-  createTodo: (data: TodoInput) => Todo;
+  createTodo: (data: TodoInput, status?: Status) => Todo;
   updateTodo: (id: string, data: Partial<TodoInput>) => void;
+  updateTodoStatus: (id: string, status: Status) => void;
   deleteTodo: (id: string) => void;
 }
 
@@ -25,13 +26,14 @@ export const useTodoStore = create<TodoStore>()(
     (set) => ({
       todos: [],
 
-      createTodo: (data) => {
+      createTodo: (data, status) => {
         const newTodo: Todo = {
           id: nanoid(),
           text: data.text,
           starred: data.starred,
           completed: data.completed || false,
           boardId: data.boardId || 'default',
+          status: status || 'todo',
         };
 
         set((state) => ({ todos: [newTodo, ...state.todos] }));
@@ -43,6 +45,13 @@ export const useTodoStore = create<TodoStore>()(
         set((state) => ({
           todos: state.todos.map((todo) =>
             todo.id === id ? { ...todo, ...data } : todo
+          ),
+        })),
+
+      updateTodoStatus: (id, status) =>
+        set((state) => ({
+          todos: state.todos.map((todo) =>
+            todo.id === id ? { ...todo, status } : todo
           ),
         })),
 
