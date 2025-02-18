@@ -23,7 +23,9 @@ export default function RootLayout({
           'bg-background font-pretendard text-foreground antialiased typo-body-16'
         )}
       >
-        {children}
+        <div className='mx-auto flex h-screen max-w-[90rem] flex-col'>
+          {children}
+        </div>
       </body>
     </html>
   );
