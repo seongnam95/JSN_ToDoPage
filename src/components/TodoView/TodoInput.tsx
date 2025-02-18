@@ -25,13 +25,13 @@ export function TodoInput({ className, onEnter }: TodoInputProps) {
   return (
     <div
       className={cn(
-        'flex h-12 w-full items-center rounded-md bg-surface pl-5 pr-2 disabled:opacity-50 max-sm:h-10 max-sm:pl-3 max-sm:pr-1',
+        'flex h-12 w-full items-center rounded-md bg-surface pl-5 pr-2 disabled:opacity-50 max-sm:pl-3 max-sm:pr-1',
         className
       )}
     >
       <input
         ref={(el) => el?.focus()}
-        className='flex-1 bg-transparent text-base outline-none typo-body-16 placeholder:text-foreground-muted disabled:cursor-not-allowed max-sm:typo-body-14'
+        className='flex-1 bg-transparent text-base outline-none typo-body-16 placeholder:text-foreground-muted disabled:cursor-not-allowed'
         placeholder='새 할일을 추가해 보세요'
         onKeyDown={handleKeyDown}
       />
