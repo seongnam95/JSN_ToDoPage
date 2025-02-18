@@ -11,3 +11,7 @@ export interface Todo {
   starred: boolean;
   boardId?: string;
 }
+
+export interface BoardGroup extends Board {
+  todos: Todo[];
+}
