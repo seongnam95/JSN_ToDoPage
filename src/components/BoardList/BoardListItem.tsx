@@ -2,13 +2,15 @@ import { cn } from '@/lib/cn';
 import { Board } from '@/types';
 
 import { EditableText } from '@/components/EditableText';
+import { useSortable } from '@dnd-kit/sortable';
+import { GripHorizontal } from 'lucide-react';
 import { BoardMenu } from './BoardMenu';
 
 interface BoardItemProps {
   board: Board;
   icon?: React.ReactNode;
+  moveMode?: boolean;
   menuEnabled?: boolean;
-  active?: boolean;
   editing?: boolean;
   disabled?: boolean;
   onClick?: (id: string) => void;
@@ -22,8 +24,8 @@ interface BoardItemProps {
 export function BoardListItem({
   board,
   icon,
+  moveMode = false,
   menuEnabled = false,
-  active,
   editing,
   disabled,
   onClick,
@@ -34,13 +36,25 @@ export function BoardListItem({
   onMenuDeleteBoard,
 }: BoardItemProps) {
   const { id, name, color } = board;
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: transform
+      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      : '',
+    transition,
+  };
 
   return (
-    <li>
+    <li
+      ref={setNodeRef}
+      style={style}
+      {...(moveMode && { ...attributes, ...listeners })}
+    >
       <div
         className={cn(
           'group relative flex h-10 w-full items-center gap-3 rounded-md px-3 transition-all duration-200',
-          active && 'bg-surface typo-title-16',
           editing && 'bg-primary-surface',
           !disabled && 'hover:bg-surface'
         )}
@@ -80,10 +94,10 @@ export function BoardListItem({
         />
 
         {/* 메뉴 버튼 */}
-        {menuEnabled && !editing && (
+        {menuEnabled && !editing && !moveMode && (
           <BoardMenu
             triggerClassName={cn(
-              'absolute right-0 opacity-0 transition-opacity duration-200 ',
+              'absolute right-0 opacity-0 transition-opacity duration-200',
               !disabled && 'group-hover:opacity-100'
             )}
             onRename={() => onMenuRename?.(id)}
@@ -92,6 +106,12 @@ export function BoardListItem({
               onMenuChangeBoardColor?.(id, activeColor)
             }
           />
+        )}
+
+        {moveMode && (
+          <div className='absolute right-0 flex size-9 items-center justify-center'>
+            <GripHorizontal className='size-4 text-foreground' />
+          </div>
         )}
       </div>
     </li>
