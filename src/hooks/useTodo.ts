@@ -24,8 +24,7 @@ export const useTodo = ({ boardId }: TodoHookProps) => {
 
   /** 현재 보드의 작업 목록 */
   const boardTodos = todos.filter((todo) => {
-    if (boardId === 'all') return true;
-    if (boardId === 'starred') return todo.starred;
+    if (['all', 'list', 'starred'].includes(boardId)) return true;
     return todo.boardId === boardId;
   });
 
