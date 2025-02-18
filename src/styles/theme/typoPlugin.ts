@@ -1,7 +1,7 @@
 import * as plugin from 'tailwindcss/plugin';
 
 export const typoPlugin = plugin.withOptions(() => {
-  return function ({ addUtilities }) {
+  return ({ addUtilities }) => {
     addUtilities({
       // Title
       '.typo-title-14': {
