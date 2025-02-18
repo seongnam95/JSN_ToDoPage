@@ -27,7 +27,7 @@ export function TodoMenu({
   onDelete,
 }: TodoMenuProps) {
   const boards = useBoardStore((state) => state.boards);
-  const userBoards = boards.filter((board) => board.type === 'user');
+  const userBoards = boards.filter((board) => board.type === 'board');
 
   return (
     <DropdownMenu>
