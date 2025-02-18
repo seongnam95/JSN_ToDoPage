@@ -1,15 +1,17 @@
-import { Star } from 'lucide-react';
+import { GripHorizontal, Star } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { EditableText } from '@/components/EditableText';
 import { Button } from '@/components/ui/Button';
 import { Checkbox } from '@/components/ui/CheckBox';
 import { Todo } from '@/types';
+import { useSortable } from '@dnd-kit/sortable';
 import { TodoMenu } from './TodoMenu';
 
 interface TodoListItemProps {
   todo: Todo;
   disabled?: boolean;
   editing?: boolean;
+  moveMode?: boolean;
   onBlur?: () => void;
   onChangeChecked?: (todoId: string, completed: boolean) => void;
   onChangeStarred?: (todoId: string, starred: boolean) => void;
@@ -23,6 +25,7 @@ export function TodoListItem({
   todo,
   disabled,
   editing,
+  moveMode,
   onBlur,
   onChangeChecked,
   onChangeStarred,
@@ -32,14 +35,26 @@ export function TodoListItem({
   onMenuDelete,
 }: TodoListItemProps) {
   const { id, text, completed, starred } = todo;
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: transform
+      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      : '',
+    transition,
+  };
 
   return (
     <li
+      ref={setNodeRef}
       className={cn(
         'relative flex h-11 items-center gap-4 rounded-md py-1 pl-2 pr-1 transition-colors duration-200',
         editing && 'bg-primary-surface',
         !disabled && 'hover:bg-surface'
       )}
+      style={style}
+      {...(moveMode && { ...attributes, ...listeners })}
     >
       {/* 할 일 체크박스 */}
       <Checkbox
@@ -59,7 +74,7 @@ export function TodoListItem({
         disabled={disabled}
       />
 
-      {!editing && (
+      {!editing && !moveMode && (
         <div className='flex items-center text-foreground-muted'>
           {/* 즐겨찾기 버튼 */}
           <Button
@@ -81,6 +96,12 @@ export function TodoListItem({
             onDelete={() => onMenuDelete?.(id)}
             disabled={disabled}
           />
+        </div>
+      )}
+
+      {moveMode && (
+        <div className='flex size-9 items-center justify-center'>
+          <GripHorizontal className='size-4 text-foreground' />
         </div>
       )}
     </li>
