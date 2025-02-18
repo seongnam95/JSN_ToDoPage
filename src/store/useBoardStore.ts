@@ -20,7 +20,7 @@ interface BoardStore {
 export const useBoardStore = create<BoardStore>()(
   persist(
     (set) => ({
-      boards: [],
+      boards: [{ id: 'default', name: '기타', color: '#C5C5C5' }],
       selectedBoard: { id: 'all', name: '전체' },
       createBoard: (data) => {
         const newBoard: Board = {

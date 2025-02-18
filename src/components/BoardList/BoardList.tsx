@@ -63,31 +63,26 @@ export function BoardList({ className }: BoardListProps) {
       {/* 사용자 보드 리스트 */}
       <p className='mt-8 pl-2 text-foreground-muted typo-body-14'>보드</p>
       <ul className='mt-1'>
-        {boards.map((board) => (
-          <BoardListItem
-            key={board.id}
-            menuEnabled
-            disabled={isEditMode}
-            editing={editBoardId === board.id}
-            active={selectedBoard.id === board.id}
-            onClick={() => selectBoard(board)}
-            onBlur={() => setEditBoardId(null)}
-            onChangeBoardName={handleChangeBoardName}
-            onMenuRename={setEditBoardId}
-            onMenuChangeBoardColor={handleChangeBoardColor}
-            onMenuDeleteBoard={deleteBoard}
-            {...board}
-          />
-        ))}
+        {boards.map((board) => {
+          const isDefaultBoard = board.id === 'default';
 
-        <BoardListItem
-          id='default'
-          name='기타'
-          color='#C5C5C5'
-          disabled={isEditMode}
-          active={selectedBoard.id === 'default'}
-          onClick={() => selectBoard({ id: 'default', name: '기타' })}
-        />
+          return (
+            <BoardListItem
+              key={board.id}
+              menuEnabled={!isDefaultBoard}
+              disabled={isEditMode}
+              editing={editBoardId === board.id}
+              active={selectedBoard.id === board.id}
+              onClick={() => selectBoard(board)}
+              onBlur={() => setEditBoardId(null)}
+              onChangeBoardName={handleChangeBoardName}
+              onMenuRename={setEditBoardId}
+              onMenuChangeBoardColor={handleChangeBoardColor}
+              onMenuDeleteBoard={deleteBoard}
+              {...board}
+            />
+          );
+        })}
 
         {/* 새 보드 추가 버튼 */}
         <Button
