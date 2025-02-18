@@ -7,6 +7,7 @@ const BOARD_STORAGE_KEY = 'BOARD_STORAGE_KEY';
 
 const DEFAULT_BOARDS: Board[] = [
   { id: 'all', name: '전체', type: 'fixed' },
+  { id: 'list', name: '목록', type: 'fixed' },
   { id: 'starred', name: '중요한 일', type: 'fixed' },
   { id: 'default', name: '기타', color: '#C5C5C5', type: 'board' },
 ];
